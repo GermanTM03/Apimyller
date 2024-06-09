@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace admyller_api.Controllers
+namespace ENDPOINTADMILER.Controllers
 {
     [ApiController]
     [Route("[controller]")]
