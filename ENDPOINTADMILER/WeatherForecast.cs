@@ -1,4 +1,4 @@
-namespace admyller_api
+namespace ENDPOINTADMILER
 {
     public class WeatherForecast
     {
