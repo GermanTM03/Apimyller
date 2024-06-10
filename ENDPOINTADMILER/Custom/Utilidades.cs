@@ -44,7 +44,6 @@ namespace ENDPOINTADMILER.Custom
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
-            //crear detalles jwt
             var jwtConfig = new JwtSecurityToken(
                 claims:userClaims,
                 expires:DateTime.UtcNow.AddMinutes(10),
