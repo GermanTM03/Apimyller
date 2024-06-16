@@ -15,185 +15,178 @@ public partial class AdmylerContext : DbContext
     {
     }
 
-    public virtual DbSet<Cita> Citas { get; set; }
+    public virtual DbSet<Appointment> Appointments { get; set; }
 
-    public virtual DbSet<Empleado> Empleados { get; set; }
+    public virtual DbSet<Employee> Employees { get; set; }
 
-    public virtual DbSet<Inventario> Inventarios { get; set; }
+    public virtual DbSet<Inventory> Inventorys { get; set; }
 
-    public virtual DbSet<ReporteMantenimiento> ReporteMantenimientos { get; set; }
+    public virtual DbSet<MaintenanceReport> MaintenanceReports { get; set; }
 
-    public virtual DbSet<Sucursal> Sucursals { get; set; }
+    public virtual DbSet<Branch> Branchs { get; set; }
 
-    public virtual DbSet<Usuario> Usuarios { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<Venta> Ventas { get; set; }
+    public virtual DbSet<Sale> Sales { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Cita>(entity =>
+        modelBuilder.Entity<Appointment>(entity =>
         {
-            entity.HasKey(e => e.Pkcita).HasName("PK__Citas__90724C3A6EB0F333");
+            entity.HasKey(e => e.Pkappointment).HasName("PK__Citas__90724C3A6EB0F333");
 
-            entity.Property(e => e.Pkcita).HasColumnName("PKCita");
-            entity.Property(e => e.Fksucursal).HasColumnName("FKSucursal");
-            entity.Property(e => e.Persona)
+            entity.Property(e => e.Pkappointment).HasColumnName("Pkappointment");
+            entity.Property(e => e.BranchId).HasColumnName("BranchId");
+            entity.Property(e => e.Person)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Razon)
+            entity.Property(e => e.Reason)
                 .HasMaxLength(255)
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Empleado>(entity =>
+        modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.Pkempleado).HasName("PK__Empleado__5C345F214D34C89F");
+            entity.HasKey(e => e.EmployeeId).HasName("PK__Empleado__5C345F214D34C89F");
 
-            entity.Property(e => e.Pkempleado).HasColumnName("PKEmpleado");
-            entity.Property(e => e.Contraseña)
+            entity.Property(e => e.EmployeeId).HasColumnName("EmployeeId");
+            entity.Property(e => e.Password)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.CorreoEmpresarial)
+            entity.Property(e => e.CompanyEmail)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Fksucursal).HasColumnName("FKSucursal");
-            entity.Property(e => e.NombreCompleto)
+            entity.Property(e => e.BranchId).HasColumnName("BranchId");
+            entity.Property(e => e.FullName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Rol)
+            entity.Property(e => e.Role)
                 .HasMaxLength(50)
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Inventario>(entity =>
+        modelBuilder.Entity<Inventory>(entity =>
         {
-            entity.HasKey(e => e.Pkproducto).HasName("PK__Inventar__DA8DC6828BE11B09");
+            entity.HasKey(e => e.ProductId).HasName("PK__Inventar__DA8DC6828BE11B09");
 
-            entity.ToTable("Inventario");
+            entity.ToTable("Inventory");
 
-            entity.Property(e => e.Pkproducto).HasColumnName("PKProducto");
-            entity.Property(e => e.Costo).HasColumnType("decimal(10, 2)");
-            entity.Property(e => e.Descripcion)
+            entity.Property(e => e.ProductId).HasColumnName("ProductId");
+            entity.Property(e => e.Cost).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.Description)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Fksucursal).HasColumnName("FKSucursal");
-            entity.Property(e => e.Marca)
+            entity.Property(e => e.BranchId).HasColumnName("BranchId");
+            entity.Property(e => e.Brand)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.NombreProducto)
+            entity.Property(e => e.ProductName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<ReporteMantenimiento>(entity =>
+        modelBuilder.Entity<MaintenanceReport>(entity =>
         {
-            entity.HasKey(e => e.Pkreporte).HasName("PK__ReporteM__45678A94BED5D096");
+            entity.HasKey(e => e.ReportId).HasName("PK__ReporteM__45678A94BED5D096");
 
-            entity.ToTable("ReporteMantenimiento");
+            entity.ToTable("MaintenanceReport");
 
-            entity.Property(e => e.Pkreporte).HasColumnName("PKReporte");
+            entity.Property(e => e.ReportId).HasColumnName("ReportId");
             entity.Property(e => e.Color)
                 .HasMaxLength(30)
                 .IsUnicode(false);
-            entity.Property(e => e.Combustible)
+            entity.Property(e => e.FuelType)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.DetallesVisuales)
+            entity.Property(e => e.VisualDetails)
                 .HasMaxLength(500)
                 .IsUnicode(false);
-            entity.Property(e => e.Direccion)
+            entity.Property(e => e.Address)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.FechaIngreso).HasColumnType("datetime");
-            entity.Property(e => e.Fkusuario).HasColumnName("FKUsuario");
-            entity.Property(e => e.Marca)
+            entity.Property(e => e.EntryDate).HasColumnType("datetime");
+            entity.Property(e => e.PkUser).HasColumnName("PkUser");
+            entity.Property(e => e.Brand)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Modelo)
+            entity.Property(e => e.Model)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.NombreCliente)
+            entity.Property(e => e.CustomerName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.NumeroDeSerie)
+            entity.Property(e => e.SerialNumber)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.NumeroTelefono)
+            entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.ObjetosDeValor)
+            entity.Property(e => e.ValuableItems)
                 .HasMaxLength(500)
                 .IsUnicode(false);
-            entity.Property(e => e.Placas)
+            entity.Property(e => e.LicensePlates)
                 .HasMaxLength(20)
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Sucursal>(entity =>
+        modelBuilder.Entity<Branch>(entity =>
         {
-            entity.HasKey(e => e.Pksucursal).HasName("PK__Sucursal__E791EC9960D636F8");
+            entity.HasKey(e => e.BranchId).HasName("PK__Sucursal__E791EC9960D636F8");
 
-            entity.ToTable("Sucursal");
+            entity.ToTable("Branch");
 
-            entity.Property(e => e.Pksucursal).HasColumnName("PKSucursal");
-            entity.Property(e => e.CorreoS)
+            entity.Property(e => e.BranchId).HasColumnName("BranchId");
+            entity.Property(e => e.Email)
                 .HasMaxLength(40)
                 .IsUnicode(false);
-            entity.Property(e => e.Direccion).IsUnicode(false);
-            entity.Property(e => e.Fkusuario).HasColumnName("FKUsuario");
-            entity.Property(e => e.NombreNegocio)
+            entity.Property(e => e.Address).IsUnicode(false);
+            entity.Property(e => e.PkUser).HasColumnName("PkUser");
+            entity.Property(e => e.BusinessName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.NumeroTelefono)
+            entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.Rfc)
+            entity.Property(e => e.RFC)
                 .HasMaxLength(13)
                 .IsUnicode(false)
                 .HasColumnName("RFC");
         });
 
-        modelBuilder.Entity<Usuario>(entity =>
+        modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Pkusuario).HasName("PK__Usuarios__2BC9AA5873AAB83A");
+            entity.HasKey(e => e.PkUser).HasName("PK__Usuarios__2BC9AA5873AAB83A");
 
-            entity.Property(e => e.Pkusuario).HasColumnName("PKUsuario");
-            entity.Property(e => e.ApellidoM)
+            entity.Property(e => e.PkUser).HasColumnName("PkUser");
+            entity.Property(e => e.FullName)
                 .HasMaxLength(40)
                 .IsUnicode(false);
-            entity.Property(e => e.ApellidoP)
-                .HasMaxLength(40)
+            
+            entity.Property(e => e.Email)
                 .IsUnicode(false);
-            entity.Property(e => e.Contra)
+            entity.Property(e => e.Password)
                 .IsUnicode(false);
-            entity.Property(e => e.Correo)
-                .HasMaxLength(40)
-                .IsUnicode(false);
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+         
         });
 
-        modelBuilder.Entity<Venta>(entity =>
+        modelBuilder.Entity<Sale>(entity =>
         {
-            entity.HasKey(e => e.Pkventa).HasName("PK__Ventas__B2526D716612DF01");
+            entity.HasKey(e => e.SaleId).HasName("PK__Ventas__B2526D716612DF01");
 
-            entity.Property(e => e.Pkventa).HasColumnName("PKVenta");
-            entity.Property(e => e.Fecha)
+            entity.Property(e => e.SaleId).HasColumnName("SaleId");
+            entity.Property(e => e.Date)
                 .HasColumnType("datetime")
-                .HasColumnName("fecha");
-            entity.Property(e => e.Fksucursal).HasColumnName("FKSucursal");
-            entity.Property(e => e.Producto)
+                .HasColumnName("date");
+            entity.Property(e => e.BranchId).HasColumnName("BranchId");
+            entity.Property(e => e.Product)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Valor).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.Vendedor)
+            entity.Property(e => e.cost).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Seller)
                 .HasMaxLength(30)
                 .IsUnicode(false);
-            entity.Property(e => e.Vienda)
-                .HasMaxLength(255)
-                .IsUnicode(false);
+    
         });
 
         OnModelCreatingPartial(modelBuilder);

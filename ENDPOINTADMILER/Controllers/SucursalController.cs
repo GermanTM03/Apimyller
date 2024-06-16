@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
 namespace ENDPOINTADMILER.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Branch")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class SucursalController : ControllerBase
@@ -22,7 +22,7 @@ namespace ENDPOINTADMILER.Controllers
         }
 
         [HttpGet]
-        [Route("Sucursales")]
+        [Route("Branchs")]
         public async Task<IActionResult> Sucursales()
         {
             // Obtener el ID de usuario del token JWT
@@ -34,8 +34,8 @@ namespace ENDPOINTADMILER.Controllers
             }
 
             // Obtener las sucursales asociadas al usuario
-            var sucursales = await _admylerContext.Sucursals
-                .Where(s => s.Fkusuario == int.Parse(userId))
+            var sucursales = await _admylerContext.Branchs
+                .Where(s => s.PkUser == int.Parse(userId))
                 .ToListAsync();
 
             return StatusCode(StatusCodes.Status200OK, new { value = sucursales });
@@ -43,8 +43,8 @@ namespace ENDPOINTADMILER.Controllers
         }
 
         [HttpPost]
-        [Route("AgregarSucursal")]
-        public async Task<IActionResult> AgregarSucursal(Sucursal nuevaSucursal)
+        [Route("AddBranchs")]
+        public async Task<IActionResult> AgregarSucursal(Branch nuevaSucursal)
         {
             // Obtener el ID de usuario del token JWT
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -55,12 +55,12 @@ namespace ENDPOINTADMILER.Controllers
             }
 
             // Asignar el valor del PKUsuario al campo Fkusuario de la nueva sucursal
-            nuevaSucursal.Fkusuario = int.Parse(userId);
+            nuevaSucursal.PkUser = int.Parse(userId);
 
             try
             {
                 // Agregar la nueva sucursal a la base de datos
-                _admylerContext.Sucursals.Add(nuevaSucursal);
+                _admylerContext.Branchs.Add(nuevaSucursal);
                 await _admylerContext.SaveChangesAsync();
 
                 return StatusCode(StatusCodes.Status200OK, new { success = true, message = "Sucursal agregada exitosamente." });
@@ -73,7 +73,7 @@ namespace ENDPOINTADMILER.Controllers
 
 
         [HttpDelete]
-        [Route("EliminarSucursal/{id}")]
+        [Route("DeleteBranchs/{id}")]
         public async Task<IActionResult> EliminarSucursal(int id)
         {
             // Obtener el ID de usuario del token JWT
@@ -85,7 +85,7 @@ namespace ENDPOINTADMILER.Controllers
             }
 
             // Buscar la sucursal en la base de datos
-            var sucursal = await _admylerContext.Sucursals.FindAsync(id);
+            var sucursal = await _admylerContext.Branchs.FindAsync(id);
 
             if (sucursal == null)
             {
@@ -93,7 +93,7 @@ namespace ENDPOINTADMILER.Controllers
             }
 
             // Verificar si la sucursal le pertenece al usuario logueado
-            if (sucursal.Fkusuario != int.Parse(userId))
+            if (sucursal.PkUser != int.Parse(userId))
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "No tienes permisos para eliminar esta sucursal." });
             }
@@ -101,7 +101,7 @@ namespace ENDPOINTADMILER.Controllers
             try
             {
                 // Eliminar la sucursal de la base de datos
-                _admylerContext.Sucursals.Remove(sucursal);
+                _admylerContext.Branchs.Remove(sucursal);
                 await _admylerContext.SaveChangesAsync();
 
                 return StatusCode(StatusCodes.Status200OK, new { success = true, message = "Sucursal eliminada exitosamente." });
@@ -112,8 +112,8 @@ namespace ENDPOINTADMILER.Controllers
             }
         }
         [HttpPut]
-        [Route("EditarSucursal/{id}")]
-        public async Task<IActionResult> EditarSucursal(int id, [FromBody] Sucursal sucursalEditada)
+        [Route("EditBranchs/{id}")]
+        public async Task<IActionResult> EditarSucursal(int id, [FromBody] Branch sucursalEditada)
         {
             // Obtener el ID de usuario del token JWT
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -124,7 +124,7 @@ namespace ENDPOINTADMILER.Controllers
             }
 
             // Buscar la sucursal en la base de datos usando el ID de la ruta
-            var sucursal = await _admylerContext.Sucursals.FindAsync(id);
+            var sucursal = await _admylerContext.Branchs.FindAsync(id);
 
             if (sucursal == null)
             {
@@ -132,7 +132,7 @@ namespace ENDPOINTADMILER.Controllers
             }
 
             // Verificar si la sucursal le pertenece al usuario logueado
-            if (sucursal.Fkusuario != int.Parse(userId))
+            if (sucursal.PkUser != int.Parse(userId))
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "No tienes permisos para editar esta sucursal." });
             }
@@ -140,11 +140,11 @@ namespace ENDPOINTADMILER.Controllers
             try
             {
                 // Actualizar los campos de la sucursal
-                sucursal.NombreNegocio = sucursalEditada.NombreNegocio;
-                sucursal.Direccion = sucursalEditada.Direccion;
-                sucursal.Rfc = sucursalEditada.Rfc;
-                sucursal.CorreoS = sucursalEditada.CorreoS;
-                sucursal.NumeroTelefono = sucursalEditada.NumeroTelefono;
+                sucursal.BusinessName = sucursalEditada.BusinessName;
+                sucursal.Address = sucursalEditada.Address;
+                sucursal.RFC = sucursalEditada.RFC;
+                sucursal.Email = sucursalEditada.Email;
+                sucursal.PhoneNumber = sucursalEditada.PhoneNumber;
 
                 // Otros campos a actualizar...
 
@@ -159,8 +159,8 @@ namespace ENDPOINTADMILER.Controllers
         }
 
         [HttpPost]
-        [Route("AgregarProducto/{sucursalId}")]
-        public async Task<IActionResult> AgregarProductoInventario(int sucursalId, Inventario nuevoProducto)
+        [Route("AddProduct/{Id}")]
+        public async Task<IActionResult> AgregarProductoInventario(int Id, Inventory nuevoProducto)
         {
             // Obtener el ID de usuario del token JWT
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -171,8 +171,8 @@ namespace ENDPOINTADMILER.Controllers
             }
 
             // Verificar si el usuario tiene acceso a la sucursal
-            var sucursal = await _admylerContext.Sucursals.FindAsync(sucursalId);
-            if (sucursal == null || sucursal.Fkusuario != int.Parse(userId))
+            var sucursal = await _admylerContext.Branchs.FindAsync(Id);
+            if (sucursal == null || sucursal.PkUser != int.Parse(userId))
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "No tienes permisos para agregar productos a esta sucursal." });
             }
@@ -180,10 +180,10 @@ namespace ENDPOINTADMILER.Controllers
             try
             {
                 // Asignar la sucursal al nuevo producto
-                nuevoProducto.Fksucursal = sucursalId;
+                nuevoProducto.BranchId = Id;
 
                 // Agregar el nuevo producto al inventario
-                _admylerContext.Inventarios.Add(nuevoProducto);
+                _admylerContext.Inventorys.Add(nuevoProducto);
                 await _admylerContext.SaveChangesAsync();
 
                 return StatusCode(StatusCodes.Status200OK, new { success = true, message = "Producto agregado al inventario exitosamente." });

@@ -23,41 +23,41 @@ namespace ENDPOINTADMILER.Controllers
         }
 
         [HttpPost]
-        [Route("RegistroUser")]
-        public async Task<IActionResult>RegistroUser(UsuarioDTO objeto)
+        [Route("RegisterUser")]
+        public async Task<IActionResult>RegistroUser(UserDTO objeto)
         {
-            var modeloUsuario = new Usuario
+            var modeloUsuario = new User
             {
-                Nombre= objeto.Nombre,
-                ApellidoP = objeto.ApellidoP,
-                ApellidoM = objeto.ApellidoM,
-                Correo = objeto.Correo,
-                Contra = _utilidades.encriptarSHA256(objeto.Contra)
+                FullName= objeto.Full_Name,
+                Email = objeto.Email,
+                Password = _utilidades.encriptarSHA256(objeto.Password)
             };
-            await _admylerContext.Usuarios.AddAsync(modeloUsuario);
+            await _admylerContext.Users.AddAsync(modeloUsuario);
             await _admylerContext.SaveChangesAsync();
 
-            if (modeloUsuario.Pkusuario != 0)
+            if (modeloUsuario.PkUser != 0)
                 return StatusCode(StatusCodes.Status200OK, new { IsSuccess = true });
             else
                 return StatusCode(StatusCodes.Status200OK, new { IsSuccess = false });
 
         }
+
+
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login(LoginDTO objeto)
         {
-            var usuarioEncontrado = await _admylerContext.Usuarios
+            var usuarioEncontrado = await _admylerContext.Users
                 .Where(
                 u =>
-                u.Correo == objeto.Correo &&
-                u.Contra == _utilidades.encriptarSHA256(objeto.Contra))
+                u.Email == objeto.Correo &&
+                u.Password == _utilidades.encriptarSHA256(objeto.Contra))
                 .FirstOrDefaultAsync();
 
             if(usuarioEncontrado == null)
                 return StatusCode(StatusCodes.Status200OK,new { IsSuccess = false,token="" });
             else
-                return StatusCode(StatusCodes.Status200OK, new { IsSuccess = true,PKUsuario = usuarioEncontrado.Pkusuario, token = _utilidades.generarJWT(usuarioEncontrado)});
+                return StatusCode(StatusCodes.Status200OK, new { IsSuccess = true,PKUsuario = usuarioEncontrado.PkUser, token = _utilidades.generarJWT(usuarioEncontrado)});
 
         }
 

@@ -33,12 +33,12 @@ namespace ENDPOINTADMILER.Custom
             }
 
         }
-        public string generarJWT(Usuario modelo)
+        public string generarJWT(User modelo)
         {
             var userClaims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier,modelo.Pkusuario.ToString()),
-                new Claim(ClaimTypes.Email,modelo.Correo!),
+                new Claim(ClaimTypes.NameIdentifier,modelo.PkUser.ToString()),
+                new Claim(ClaimTypes.Email,modelo.Email!),
             };
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
