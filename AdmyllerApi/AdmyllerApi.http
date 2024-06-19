@@ -1,0 +1,6 @@
+@AdmyllerApi_HostAddress = http://localhost:5098
+
+GET {{AdmyllerApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
