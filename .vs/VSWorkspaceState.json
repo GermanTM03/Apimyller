@@ -1,6 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\AdmyllerApi"
   ],
+  "SelectedNode": "\\AdmyllerApi\\AdmyllerApi.csproj",
   "PreviewInSolutionExplorer": false
 }

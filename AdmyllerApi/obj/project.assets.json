@@ -433,11 +433,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joaht\\Documents\\Dev\\admyller-api\\AdmyllerApi\\AdmyllerApi.csproj",
+      "projectUniqueName": "C:\\Users\\joaht\\source\\repos\\jv6ix9ine\\admyller-api\\AdmyllerApi\\AdmyllerApi.csproj",
       "projectName": "AdmyllerApi",
-      "projectPath": "C:\\Users\\joaht\\Documents\\Dev\\admyller-api\\AdmyllerApi\\AdmyllerApi.csproj",
+      "projectPath": "C:\\Users\\joaht\\source\\repos\\jv6ix9ine\\admyller-api\\AdmyllerApi\\AdmyllerApi.csproj",
       "packagesPath": "C:\\Users\\joaht\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joaht\\Documents\\Dev\\admyller-api\\AdmyllerApi\\obj\\",
+      "outputPath": "C:\\Users\\joaht\\source\\repos\\jv6ix9ine\\admyller-api\\AdmyllerApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\joaht\\AppData\\Roaming\\NuGet\\NuGet.Config",

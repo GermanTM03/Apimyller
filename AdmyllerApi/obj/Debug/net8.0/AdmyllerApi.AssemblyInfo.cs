@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AdmyllerApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76c4d60d3241a0362cca7307c60766ea498b8cc2")]
 [assembly: System.Reflection.AssemblyProductAttribute("AdmyllerApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AdmyllerApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
